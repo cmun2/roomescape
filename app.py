@@ -16,7 +16,7 @@ SECRET_KEY = 'SPARTA'
 # client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
 # db = client.dbsparta_plus_week4
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.mja2a.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test_이름:sparta@cluster0.mja2a.mongodb.net/?retryWrites=true&w=majority')
 db = client.roomescape
 
 @app.route('/')
