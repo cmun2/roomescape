@@ -12,7 +12,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.mja2a.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@cluster0.34r2eiy.mongodb.net/?retryWrites=true&w=majority')
 db = client.roomescape
 
 # print(db)
@@ -138,7 +138,6 @@ def update_like():
         return jsonify({"result": "success", 'msg': 'updated'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=3000, debug=True)
