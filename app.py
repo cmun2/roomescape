@@ -151,12 +151,12 @@ def home():
     return render_template('detail.html')
 
 
-@app.route("/detail", methods=["POST"])
-def comment_post():
-    userID_receive = request.form['userID_receive']
-    comment_receive = request.form['comment_receive']
+@app.route("/users", methods=["POST"])
+def save_comment():
+    userid_receive = request.form['userID_give']
+    comment_receive = request.form['comment_give']
     doc = {
-        'userID': userID_receive,
+        'userID': userid_receive,
         'comment': comment_receive
     }
     db.users.insert_one(doc)
@@ -164,8 +164,8 @@ def comment_post():
     return jsonify({'msg':'후기 등록 완료'})
 
 
-@app.route("/comments", methods=["GET"])
-def web_comments_get():
+@app.route("/users", methods=["GET"])
+def show_comment():
     comment_list = list(db.users.find({}, {'id': False}))
     return jsonify({'comments':comment_list})
 
