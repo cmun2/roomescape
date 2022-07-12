@@ -6,7 +6,6 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
-
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
@@ -15,6 +14,7 @@ SECRET_KEY = 'SPARTA'
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.mja2a.mongodb.net/?retryWrites=true&w=majority')
 db = client.roomescape
+
 
 @app.route('/')
 def home():
@@ -64,12 +64,11 @@ def sign_up():
     # DB에 저장
     return jsonify({'result': 'success'})
 
-
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
-    # ID 중복확인
-    return jsonify({'result': 'success'})
-
+    username_receive = request.form['username_give']
+    exists = bool(db.users.find_one({"username": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
 
 @app.route('/update_profile', methods=['POST'])
 def save_img():
@@ -102,7 +101,6 @@ def get_posts():
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다."})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
 
 @app.route('/update_like', methods=['POST'])
 def update_like():
