@@ -19,7 +19,7 @@
         function show_comment() {
             $.ajax({
                 type: 'GET',
-                url: '/comments',
+                url: '/users',
                 data: {},
                 success: function (response) {
                     let rows = response['comments']
@@ -44,13 +44,13 @@
         }
 
         function save_comment() {
-            let userID = $('#userID').val()
-            let comment = $('#comment').val()
+            let userID = $('#floatingTextarea2').val()
+            let comment = $('.textarea-desc').val()
 
 
             $.ajax({
                 type: 'POST',
-                url: '/comments',
+                url: '/users',
                 data: {userID_give: userID, comment_give: comment },
                 success: function (response) {
                     alert(response['msg'])
