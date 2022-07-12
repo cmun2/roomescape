@@ -15,6 +15,8 @@ SECRET_KEY = 'SPARTA'
 client = MongoClient('mongodb+srv://test:sparta@cluster0.mja2a.mongodb.net/?retryWrites=true&w=majority')
 db = client.roomescape
 
+# print(db)
+
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
