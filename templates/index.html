@@ -32,13 +32,13 @@
                 url: "/store",
                 data: {},
                 success: function (response) {
-                    let rows = response['orders']
+                    let rows = response['store']
                     console.log(response)
                     for (let i = 0; i < rows.length; i++) {
                         let title = rows[i]['title']
+                        let img = rows[i]['img']
                         let temp_html = `<div class="info">
-                                            <div class="info-header">
-                                                <img src="" alt="">
+                                            <div class="info-header" style='${img}'>
                                             </div>
                                             <div class="info-body">
                                                 <div class="info-title">

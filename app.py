@@ -124,8 +124,10 @@
 import requests
 
 from flask import Flask, render_template, request, jsonify
+from selenium import webdriver
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
+from time import sleep
 
 client = MongoClient('mongodb+srv://changsoon:tnsrh124!1@cluster0.ry8gyso.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta_roomEscape
@@ -133,21 +135,30 @@ db = client.dbsparta_roomEscape
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 data = requests.get('https://www.roomescape.co.kr/store/main.php', headers=headers)
 
-soup = BeautifulSoup(data.text, 'html.parser')
+driver = webdriver.Chrome('./chromedriver')
+url = "https://www.roomescape.co.kr/store/main.php"
+driver.get(url)
+sleep(5)
+
+req = driver.page_source
+driver.quit()
+
+soup = BeautifulSoup(req, 'html.parser')
 app = Flask(__name__)
-print(soup)
-#company_list_row > div:nth-child(12) > div.ratio > div > div > div.info > div.name > span > a
-stores = soup.select('#company_list_row > div:nth-child(12) > div.ratio > div > div > div.info > div.name > span > a')
+#company_list_row > div:nth-child(12) > div.ratio > div >
+#company_list_row > div:nth-child(1) > div.m_ratio > div > div > div.info > div.desc > span
+#company_list_row > div:nth-child(1) > div.m_ratio > div > div > div.info > div.pic
+stores = soup.select('#company_list_row > div > div.ratio > div')
 for store in stores:
-    a = store.select_one('')
-    if a is not None:
-        title = a.text
+    title = store.select_one('div > div.info > div.name > span > a').text
+    img = store.select_one('div > div.info > div.pic')['style']
 
-        doc = {
-            'title': title,
-        }
+    doc = {
+        'title': title,
+        'img':img
+    }
 
-        db.store.insert_one(doc)
+    # db.store.insert_one(doc)
 
 @app.route('/')
 def home():
