@@ -10,109 +10,264 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <style>
-        .review01 {
-            width: 500px;
-            margin: 60px auto 0px auto;
-            padding-bottom: 60px;
+    <link rel="stylesheet" href="../static/css/detail.css">
+    <script>
+        $(document).ready(function () {
+            show_comment();
+        });
+
+        function show_comment() {
+            $.ajax({
+                type: 'GET',
+                url: '/users',
+                data: {},
+                success: function (response) {
+                    let rows = response['comments']
+                    console.log(rows)
+
+                    for (let i = 0; i < rows.length; i++) {
+                        let userID = rows[i]['userID']
+                        let comment = rows[i]['comment']
+
+
+
+                        let temp_html = `<div class="review_all">
+                                            <div class="memb_review">
+                                                <div class="review_top">
+                                                    <div class="writer">
+                                                        <p class="name text">${userID}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="review_bottom">
+                                                <p>${comment}</p>
+                                            </div>
+                                          </div>  `
+                        $('#comment-box').append(temp_html)
+                    }
+                }
+            });
         }
-        .review02 {
-            margin: 10px;
+
+        function save_comment() {
+            let userID = $('#floatingTextarea2').val()
+            let comment = $('.textarea-desc').val()
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/users',
+                data: {userID_give: userID, comment_give: comment },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            });
         }
-    </style>
+    </script>
+
+
 </head>
 <body>
-<div id="Review" class="review01">
-    <div class="perface">
-        <h5 class="review02">리뷰</h5>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                      style="height: 150px"></textarea>
-            <label for="floatingTextarea2">후기</label>
-            <textarea class="textarea is-link" placeholder="Link textarea"></textarea>
-            <div class="memb_review_box">
-                <div class="memb_review">
-                    <div class="review_top">
-                        <div class="writer">
-                            <span class="name text">${{userID}}</span>
+<div class="wrap">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <img src="../static/images/logo.png" alt="logo">
+            </div>
+        </div>
+        <div class="membership">
+            <button class="login">로그인</button>
+            <button class="register">회원가입</button>
+        </div>
+    </header>
+    <main>
+        <div class="escape-theme">
+            <div class="theme-description">
+                <div class="preface">
+                    <h2>소개</h2>
+                </div>
+                <div class="desc">
+                    <p>
+                            <span>
+                                "극강의 공포를 느끼고 싶다면 ! 남다른 스케일의 방탈출을 즐기고 싶다면 !"
+                                <br>
+                                "신사역 8번 출구 인근 세상 제일 꿀잼 방탈출 카페 ‘시그널헌터’"
+                            </span>
+                    </p>
+                </div>
+            </div>
+            <div class="theme-image">
+                <div class="preface">
+                    <h2>테마</h2>
+                </div>
+                <div class="theme-list">
+                    <div class="theme">
+                        <div class="theme-inner">
+                            <div class="pic"
+                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
+                                <a href="/theme/detail.php?theme=82"><</a>
+                            </div>
+                            <div class="info">
+                                <div class="name">
+                                    <p>
+                                        <a href="/theme/detail.php?theme=82"></a>
+                                    </p>
+                                </div>
+                                <div class="genre">
+                                    <a class="genre-title" href="/theme/detail.php?theme=82">
+                                        젠틀맨 뱅크
+                                    </a>
+                                    <div class="genre-review">
+                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                        <div class="genre-score">5.0</div>
+                                        <div class="genre-count">| 리뷰 0개</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="theme">
+                        <div class="theme-inner">
+                            <div class="pic"
+                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
+                                <a href="/theme/detail.php?theme=82"><</a>
+                            </div>
+                            <div class="info">
+                                <div class="name">
+                                    <p>
+                                        <a href="/theme/detail.php?theme=82"></a>
+                                    </p>
+                                </div>
+                                <div class="genre">
+                                    <a class="genre-title" href="/theme/detail.php?theme=82">
+                                        젠틀맨 뱅크
+                                    </a>
+                                    <div class="genre-review">
+                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                        <div class="genre-score">5.0</div>
+                                        <div class="genre-count">| 리뷰 0개</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="theme">
+                        <div class="theme-inner">
+                            <div class="pic"
+                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
+                                <a href="/theme/detail.php?theme=82"><</a>
+                            </div>
+                            <div class="info">
+                                <div class="name">
+                                    <p>
+                                        <a href="/theme/detail.php?theme=82"></a>
+                                    </p>
+                                </div>
+                                <div class="genre">
+                                    <a class="genre-title" href="/theme/detail.php?theme=82">
+                                        젠틀맨 뱅크
+                                    </a>
+                                    <div class="genre-review">
+                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                        <div class="genre-score">5.0</div>
+                                        <div class="genre-count">| 리뷰 0개</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="theme">
+                        <div class="theme-inner">
+                            <div class="pic"
+                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
+                                <a href="/theme/detail.php?theme=82"><</a>
+                            </div>
+                            <div class="info">
+                                <div class="name">
+                                    <p>
+                                        <a href="/theme/detail.php?theme=82"></a>
+                                    </p>
+                                </div>
+                                <div class="genre">
+                                    <a class="genre-title" href="/theme/detail.php?theme=82">
+                                        젠틀맨 뱅크
+                                    </a>
+                                    <div class="genre-review">
+                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                        <div class="genre-score">5.0</div>
+                                        <div class="genre-count">| 리뷰 0개</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="theme">
+                        <div class="theme-inner">
+                            <div class="pic"
+                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
+                                <a href="/theme/detail.php?theme=82"><</a>
+                            </div>
+                            <div class="info">
+                                <div class="name">
+                                    <p>
+                                        <a href="/theme/detail.php?theme=82"></a>
+                                    </p>
+                                </div>
+                                <div class="genre">
+                                    <a class="genre-title" href="/theme/detail.php?theme=82">
+                                        젠틀맨 뱅크
+                                    </a>
+                                    <div class="genre-review">
+                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                        <div class="genre-score">5.0</div>
+                                        <div class="genre-count">| 리뷰 0개</div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="review_bottom">
-                    <p><span>
-						${{comment}}
-					</span></p>
+            </div>
+            <div class="theme-info">
+                <div class="preface">
+                    <h2>정보</h2>
+                </div>
+                <div class="info-telephone">02-336-3527</div>
+                <div class="info-address">서울 마포구 서교동 338-48</div>
+            </div>
+            <div class="theme-fee">
+                <div class="preface">
+                    <h2>요금</h2>
+                </div>
+                <div class="fee-list">
+                    ?
                 </div>
             </div>
-
         </div>
-    </div>
+        <div class="review" id="Review">
+            <div class="perface">
+                <h2 class="review02">리뷰</h2>
+            </div>
+            <div class="form-floating">
+                <div class="form-box">
+                    <input type="text" class="input-title" placeholder="${userID}"
+                           id="floatingTextarea2">
+                    <textarea class="textarea-desc" placeholder="comment"></textarea>
+                    <button class="form-regist" onclick="save_comment()">후기 등록</button>
+                </div>
+                <div class="memb_review_box" id="comment-box">
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
-</div>
-<script>
-    function isEmpty(value) {
-        if (value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
-            return true
-        } else {
-            return false
-        }
-    }
 
-
-    $("#reviewFrm").submit (function (e) {
-        e.preventDefault();
-
-        if (isEmpty($("#datetime").text()) === true) {
-            alert("작성날짜가 없습니다.");
-            return false;
-        }
-
-        if (isEmpty($("#rated_star").val()) === true) {
-            alert("평점을 입력해주세요.");
-            return false;
-        }
-
-        if (isEmpty($("#review_content").val()) === true) {
-            alert("작성해주세요.");
-            return false;
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "https://www.roomescape.co.kr/bbs/review.write.ok.php",
-            data: {
-                "store_id": "214",
-                "user_id": "",
-                "review_type": "store",
-                "review_writed_data": $("#datetime").text(),
-                "review_content": $("#review_content").val(),
-                "review_reated_star": $("#rated_star").val()
-            },
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-
-                $result = eval(data);
-
-                if ($result.review_writed_result == "fail") {
-                    alert($result.msg);
-                    return false;
-                }
-
-                if ($result.review_writed_result == "exist") {
-                    alert($result.msg);
-                    return false;
-                }
-
-                if ($result.review_writed_result == "succed") {
-                    alert($result.msg);
-                    location.reload();
-                }
-            }
-        });
-    });
-
-</script>
 
 
 </body>
