@@ -95,6 +95,13 @@
                 }
             });
         }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/login"
+        }
+
     </script>
     <style>
         #map {
@@ -121,8 +128,7 @@
             </div>
         </div>
         <div class="membership">
-            <button class="login">로그인</button>
-            <button class="register">회원가입</button>
+            <button class="login">로그아웃</button>
         </div>
     </header>
     <main>

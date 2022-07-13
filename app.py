@@ -71,9 +71,8 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-
-@app.route('/')
-def home():
+@app.route('/detail')
+def page2():
     return render_template('detail.html')
 
 
@@ -96,4 +95,4 @@ def show_comment():
     return jsonify({'comments':comment_list})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8000, debug=True)
