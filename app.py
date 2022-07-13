@@ -166,7 +166,7 @@ def save_comment():
 
 @app.route("/users", methods=["GET"])
 def show_comment():
-    comment_list = list(db.users.find({}, {'id': False}))
+    comment_list = list(db.users.find({}, {'_id': False}))
     return jsonify({'comments':comment_list})
 
 

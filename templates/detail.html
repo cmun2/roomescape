@@ -23,20 +23,26 @@
                 data: {},
                 success: function (response) {
                     let rows = response['comments']
+                    console.log(rows)
+
                     for (let i = 0; i < rows.length; i++) {
                         let userID = rows[i]['userID']
                         let comment = rows[i]['comment']
 
-                        let temp_html = `<div class="memb_review">
-                                            <div class="review_top">
-                                                <div class="writer">
-                                                    <p class="name text">${userID}</p>
+
+
+                        let temp_html = `<div class="review_all">
+                                            <div class="memb_review">
+                                                <div class="review_top">
+                                                    <div class="writer">
+                                                        <p class="name text">${userID}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="review_bottom">
-                                            <p>${comment}</p>
-                                        </div>`
+                                            <div class="review_bottom">
+                                                <p>${comment}</p>
+                                            </div>
+                                          </div>  `
                         $('#comment-box').append(temp_html)
                     }
                 }
@@ -255,17 +261,7 @@
                     <textarea class="textarea-desc" placeholder="comment"></textarea>
                     <button class="form-regist" onclick="save_comment()">후기 등록</button>
                 </div>
-                <div class="memb_review_box">
-                    <div class="memb_review" id="comment-box">
-                        <div class="review_top">
-                            <div class="writer">
-                                <p class="name text">${userID}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review_bottom">
-                        <p>${comment}</p>
-                    </div>
+                <div class="memb_review_box" id="comment-box">
                 </div>
             </div>
         </div>

@@ -188,9 +188,6 @@ main .form-box .form-regist {
 
 main .memb_review_box {
     margin-top: 10px;
-    border: 1px solid #bdbdbd;
-    border-radius: 10px;
-    padding: 10px;
 }
 
 main .memb_review_box .writer {
@@ -207,4 +204,11 @@ main .memb_review_box .writer .name {
 
 main .memb_review_box .review_bottom {
     margin: 10px 0;
+}
+
+main .review_all {
+    border: 1px solid #bdbdbd;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
 }
