@@ -72,8 +72,9 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 @app.route('/detail')
-def detail():
+def page2():
     return render_template('detail.html')
+
 
 @app.route("/users", methods=["POST"])
 def save_comment():
@@ -83,22 +84,15 @@ def save_comment():
         'userID': userid_receive,
         'comment': comment_receive
     }
-    db.users.insert_one(doc)
+    db.comments.insert_one(doc)
 
     return jsonify({'msg':'후기 등록 완료'})
 
-@app.route('/detail', methods=['POST'])
-def get_map():
-    gmaps = googlemaps.Client(key='AIzaSyBTNm1FSmfSnIa9ZakeUfLVXTo6bEd_W3c')
-    geocode_result = gmaps.geocode('서울 마포구 서교동 338-48')
-    if not geocode_result:
-        return jsonify({'result': 'fail','msg': "Coudln't find the address on the map"})
 
-    n_lat = geocode_result['geometry']['location']['lat']
-    n_lng = geocode_result['geometry']['location']['lng']
-    loc = {'lat': n_lat, 'lng': n_lng}
-
-    print(loc)
+@app.route("/users", methods=["GET"])
+def show_comment():
+    comment_list = list(db.comments.find({}, {'_id': False}))
+    return jsonify({'comments':comment_list})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=3000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
