@@ -21,8 +21,8 @@ app = Flask(__name__)
 # client = MongoClient('mongodb+srv://test_changsoon:sparta@cluster0.34r2eiy.mongodb.net/?retryWrites=true&w=majority')
 # db = client.roomescape
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.vvs7v.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
+client = MongoClient('mongodb+srv://test:sparta@cluster0.34r2eiy.mongodb.net/?retryWrites=true&w=majority')
+db = client.roomescape
 
 
 
@@ -30,8 +30,11 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 url = "https://www.roomescape.co.kr/store/detail.php"
 
-for i in range(410, 500):
-    data = requests.get(url, params={'cafe' : 1+i}, headers=headers)
+num_list = list(db.stores.find({}, {"_id": False, "name": False, "img": False, "address": False}))
+#rint(num_list[0]['num'])
+#num_list[i]['num']
+for i in range(len(num_list)):
+    data = requests.get(url, params={'cafe': num_list[i]['num']}, headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
 
 
@@ -42,13 +45,13 @@ for i in range(410, 500):
     else:
         desc = desc
 
-    image = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.pic')[
-                'style'][21:-2]
-    if image is None:
-        image = '정보가 없어요'
-    else:
-        image = image
+    total_image = soup.select_one('body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list')
+
+    #[21:-2]
+    if total_image is not None:
+        image = soup.select_one(
+            'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.pic')[
+                    'style'][21:-2]
 
     info_tag = soup.select_one(
         'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.name.font_fit_div > p > span > a').text
@@ -75,7 +78,7 @@ for i in range(410, 500):
     else:
         address = address
     fee = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.fee > div.fee_info > div:nth-child(1)').text
+        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.fee > div.fee_info').text
     if fee is None:
         fee = '정보가 없어요'
     else:
@@ -90,7 +93,7 @@ for i in range(410, 500):
         'address': address,
         'fee': fee
     }
-    db.miniproject2.insert_one(doc)
+    db.details.insert_one(doc)
 
 
 # data = requests.get('https://www.roomescape.co.kr/store/detail.php?cafe=405', headers=headers)
