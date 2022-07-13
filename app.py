@@ -38,62 +38,66 @@ for i in range(len(num_list)):
     soup = BeautifulSoup(data.text, 'html.parser')
 
 
-    desc = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.intro > div.desc > p > span').text.strip()
-    if desc is None:
-        desc = '정보가 없어요'
-    else:
-        desc = desc
-
-    total_image = soup.select_one('body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list')
-
-    #[21:-2]
-    if total_image is not None:
-        image = soup.select_one(
-            'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.pic')[
-                    'style'][21:-2]
-
-    info_tag = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.name.font_fit_div > p > span > a').text
-    if info_tag is None:
-        info_tag = '정보가 없어요'
-    else:
-        info_tag = info_tag
-    genre = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.genre_n_star > span.text.genre').text
-    if genre is None:
-        genre = '정보가 없어요'
-    else:
-        genre = genre
-    phone = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.loc > div.loc_info > div.phone > span.text.value').text
-    if phone is None:
-        phone = '정보가 없어요'
-    else:
-        phone = phone
-    address = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.loc > div.loc_info > div.address > span.text.value').text
-    if address is None:
-        address = '정보가 없어요'
-    else:
-        address = address
-    fee = soup.select_one(
-        'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.fee > div.fee_info').text
-    if fee is None:
-        fee = '정보가 없어요'
-    else:
-        fee = fee
-
-    doc = {
-        'desc': desc,
-        'image': image,
-        'info_tag': info_tag,
-        'genre': genre,
-        'phone': phone,
-        'address': address,
-        'fee': fee
-    }
-    db.details.insert_one(doc)
+    # desc = soup.select_one(
+    #     'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.intro > div.desc > p > span').text.strip()
+    # if desc is None:
+    #     desc = '정보가 없어요'
+    # else:
+    #     desc = desc
+    #
+    # image = soup.select_one('body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.pic')
+    #
+    # if image is not None:
+    #     image = soup.select_one(
+    #         'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.pic')[
+    #                 'style'][21:-2]
+    # else:
+    #     image = '이미지 준비중'
+    #
+    # info_tag = soup.select_one('body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.name.font_fit_div > p > span > a')
+    # if info_tag is not None:
+    #     info_tag = soup.select_one(
+    #         'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.name.font_fit_div > p > span > a').text
+    #
+    # else:
+    #     info_tag = ''
+    #
+    # genre = soup.select_one('body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.genre_n_star > span.text.genre')
+    # if genre is not None:
+    #     genre = soup.select_one(
+    #         'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.theme_info > div.theme_list > div:nth-child(1) > div > div.info > div.genre_n_star > span.text.genre').text
+    # else:
+    #     genre = ''
+    #
+    # phone = soup.select_one(
+    #     'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.loc > div.loc_info > div.phone > span.text.value').text
+    # if phone is None:
+    #     phone = '정보가 없어요'
+    # else:
+    #     phone = phone
+    # address = soup.select_one(
+    #     'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.loc > div.loc_info > div.address > span.text.value').text
+    # if address is None:
+    #     address = '정보가 없어요'
+    # else:
+    #     address = address
+    # fee = soup.select_one(
+    #     'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.fee > div.fee_info').text
+    # if fee is None:
+    #     fee = '정보가 없어요'
+    # else:
+    #     fee = fee
+    #
+    # doc = {
+    #     'desc': desc,
+    #     'image': image,
+    #     'info_tag': info_tag,
+    #     'genre': genre,
+    #     'phone': phone,
+    #     'address': address,
+    #     'fee': fee
+    # }
+    #db.details.insert_one(doc)
 
 
 # data = requests.get('https://www.roomescape.co.kr/store/detail.php?cafe=405', headers=headers)
@@ -107,8 +111,8 @@ def home():
 
 @app.route("/detail", methods=["GET"])
 def listing():
-    detail_list = list(db.miniproject2.find({}, {'_id': False}))
-    return jsonify({'detail':detail_list})
+    detail_list = list(db.details.find({}, {'_id': False}))
+    return jsonify({'detail': detail_list})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
