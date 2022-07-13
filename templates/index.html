@@ -42,7 +42,6 @@
 
         }
 
-<<<<<<< HEAD
         function listing() {
             $.ajax({
                 type: "GET",
@@ -67,12 +66,6 @@
                                                 </div>
                                             </div>
                                         </div>`
-=======
-        <script>
-
-        </script>
->>>>>>> origin/master
-
                         $('.info-wrap').append(temp_html)
                     }
                 }
@@ -130,7 +123,6 @@
             data: {},
             success: function (response) {
                 let rows = response['stores']
-                {#console.log(rows)#}
                 for (let i = 0; i < rows.length; i++) {
                     let address = rows[i]['address']
                     if (address === locationName) {
