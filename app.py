@@ -125,51 +125,71 @@ import requests
 
 from flask import Flask, render_template, request, jsonify
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from time import sleep
 
 client = MongoClient('mongodb+srv://changsoon:tnsrh124!1@cluster0.ry8gyso.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta_roomEscape
-
-headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-data = requests.get('https://www.roomescape.co.kr/store/main.php', headers=headers)
-
-driver = webdriver.Chrome('./chromedriver')
-url = "https://www.roomescape.co.kr/store/main.php"
-driver.get(url)
-sleep(5)
-
-req = driver.page_source
-driver.quit()
-
-soup = BeautifulSoup(req, 'html.parser')
 app = Flask(__name__)
-#company_list_row > div:nth-child(12) > div.ratio > div >
-#company_list_row > div:nth-child(1) > div.m_ratio > div > div > div.info > div.desc > span
-#company_list_row > div:nth-child(1) > div.m_ratio > div > div > div.info > div.pic
-stores = soup.select('#company_list_row > div > div.ratio > div')
-for store in stores:
-    title = store.select_one('div > div.info > div.name > span > a').text
-    img = store.select_one('div > div.info > div.pic')['style']
+#
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+#
 
-    doc = {
-        'title': title,
-        'img':img
-    }
+# 1번크롤링
+# data = requests.get('https://www.roomescape.co.kr/store/main.php', headers=headers)
+# url = "https://www.roomescape.co.kr/store/main.php"
+# driver = webdriver.Chrome('./chromedriver')
+# driver.get(url)
+# sleep(5)
+#
+# for i in range(15):
+#     element = driver.find_element(By.ID, 'company_list_more_btn')
+#     element.click()
+#     sleep(1)
+#
+# req = driver.page_source
+# soup = BeautifulSoup(req, 'html.parser')
+# stores = soup.select('#company_list_row > div > div.ratio > div')
+# for store in stores:
+#     name = store.select_one('div > div.name > span > a').text
+#     img = store.select_one('div > div.info > div.pic')['style']
+#     num = img[-9:-6].strip('/')
+#     print(name, img, num)
+#
+#     doc = {
+#         'name': name,
+#         'img': img,
+#         'num': num,
+#         'address': '0'
+#     }
+#     db.store.insert_one(doc)
 
-    # db.store.insert_one(doc)
+# 2번크롤링
+# url = 'https://www.roomescape.co.kr/store/detail.php'
+# alllist = db.store.find({'num': {'$gt': '0'}}, {'_id': False, 'num': True})
+# for i in alllist:
+#     data = requests.get(url, params={'cafe': i["num"]}, headers=headers)
+#     soup = BeautifulSoup(data.text, 'html.parser')
+#     address = soup.select(
+#         'body > div.container > div.container_inner.section.section_det_info > div > div.det_info_inner.loc')
+#     for ads in address:
+#         loc = ads.select_one('div.loc_info > div.address > span.text.value').text[0:2]
+#         db.store.update_many({}, {'$set': {'address': loc}})
+
 
 @app.route('/')
 def home():
-   return render_template('index.html')
+    return render_template('index.html')
 
 
-@app.route("/movies", methods=["GET"])
-def movies_get():
-    store_list = list(db.store.find({},{'_id':False}))
-    return jsonify({'orders': store_list})
+@app.route("/store", methods=["GET"])
+def listing():
+    store_list = list(db.store.find({}, {'_id': False}))
+    return jsonify({'store': store_list})
 
 
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)

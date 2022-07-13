@@ -46,7 +46,7 @@ header .membership > button:hover {
 
 
 main {
-    padding-top: 100px;
+    padding: 100px 0;
     background-color: #eee;
     min-height: calc(100vh - 80px);
 }
@@ -106,7 +106,7 @@ main {
 }
 
 .info-wrap .info {
-    width: calc(100%/3 - 20px);
+    width: calc(100% / 3 - 20px);
     padding: 20px 20px 40px 20px;
     margin: 10px;
     background-color: #fff;
@@ -116,18 +116,23 @@ main {
 .info-wrap .info .info-header {
     object-fit: cover;
     margin-bottom: 20px;
-    background-image: url("../images/logo.png");
-}
-
-.info-wrap .info .info-header img {
     height: 200px;
     width: 100%;
-    object-fit: cover;
+    background-image: url("../images/logo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
+
 
 .info-wrap .info .info-title {
     font-size: 23px;
     margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.info-wrap .info:hover .info-title{
+    color: #9047ee;
 }
 
 .info-wrap .info .info-review {
