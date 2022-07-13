@@ -1,193 +1,304 @@
 <!doctype html>
 <html lang="en">
-    <head>
+<head>
 
-        <!-- Webpage Title -->
-        <title>Home | 일상탈출</title>
+    <!-- Webpage Title -->
+    <title>Home | 일상탈출</title>
 
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
           rel="stylesheet">
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bulma CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-        <!-- Font Awesome CSS -->
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="../static/css/detail.css">
+    <script>
+        $(document).ready(function () {
+            listing();
+        });
 
-        <style>
-            * {
-                font-family: 'Noto Serif KR', serif;
-                margin: 0;
-                padding: 0;
-                border: 0;
-                font-size: 100;
-                vertical-align: baseline;
-                background:transparent;
-                box-sizing: border-box;
-            }
-            .all {
-                width: 100%;
-                padding-left:0;
-                padding-right:0;
-                overflow:hidden;
-                margin-right:auto;
-                margin-left:auto;
-            }
-            .escape-wrap {
-                width: 100%;
-                margin-top: 50px;
-                padding-top: 50px;
-                padding-bottom: 50px;
-                box-sizing: border-box;
-                background-color: #f0f0f0;
-            }
-            .escape-theme {
-                width:717px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .theme-description {
-                background-color: #ffffff;
-            }
-            .theme-image {
-                background-color: #ffffff;
-                margin-top: 50px;
-            }
-            .theme-list {
-                margin-top: 10px;
-                width: 100%;
-            }
-            .theme {
-                display: inline-block;
-                position: relative;
-                width: calc(25% - 4px);
-            }
-            .theme-inner {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                height: 100%;
-                margin: auto;
-            }
-            .theme-list .theme-inner .pic {
-                width: 100%;
-                height: 80%
-                background-size: cover;
-                background-position: center;
-            }
-        </style>
-        <script>
-        </script>
+        function listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/detail',
+                data: {},
+                success: function (response) {
+                    let rows = response['detail']
+                    for (let i=0;i<rows.length; i++) {
+                        let desc = rows[i]['desc']
+                        let image = rows[i]['image']
+                        let info_tag = rows[i]['info_tag']
+                        let genre = rows[i]['genre']
+                        let phone = rows[i]['phone']
+                        let address = rows[i]['address']
+                        let fee = rows[i]['fee']
 
-    </head>
-    <body>
-        <div class="all">
-            <div class="escape-top">
-                <div class="jumbotron jumbotron-fluid">
-                  <div class="container">
-                    <h1 class="display-4">일상탈출</h1>
-                    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-                  </div>
-                </div>
-            </div>
-            <div class="escape-wrap">
-                <div class="escape-theme">
-                    <div class="theme-description">
-                        <div class="preface">
-                            <h2>소개</h2>
-                        </div>
-                        <div class="desc">
-                            <p>
-                                <span>
-                                    "극강의 공포를 느끼고 싶다면 ! 남다른 스케일의 방탈출을 즐기고 싶다면 !"
-                                    <br>
-                                    "신사역 8번 출구 인근 세상 제일 꿀잼 방탈출 카페 ‘시그널헌터’"
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="theme-image">
-                        <div class="preface">
-                            <h2>테마</h2>
-                        </div>
-                        <div class="theme-list">
-                            <div class="theme">
-                                <div class="theme-inner">
-                                    <div class="pic" style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
-                                        <a href="/theme/detail.php?theme=82"><</a>
-                                    </div>
-                                    <div class="info">
-                                        <div class="name">
-                                            <p>
-                                                <span>
-                                                    <a href="/theme/detail.php?theme=82">젠틀맨 뱅크</a>
-                                                </span>
-                                            </p>
+                        let temp_html = `<div class="theme-description">
+                                            <div class="preface">
+                                                <h2>소개</h2>
+                                            </div>
+                                            <div class="desc">
+                                                <p>
+                                                    <span>
+                                                        ${desc}
+                                                    </span>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="genre">
-                                            <span class="text-genre">범죄</span>
+                                        <div class="theme-image">
+                                            <div class="preface">
+                                                <h2>테마</h2>
+                                            </div>
+                                            <div class="theme-list">
+                                                <div class="theme">
+                                                    <div class="theme-inner">
+                                                        <div class="pic"
+                                                             style="background-image:url(${image});">
+                                                            <a href="/theme/detail.php?theme=82"><</a>
+                                                        </div>
+                                                        <div class="info">
+                                                            <div class="name">
+                                                                <p>
+                                                                    <a href="/theme/detail.php?theme=82"></a>
+                                                                </p>
+                                                            </div>
+                                                            <div class="genre">
+                                                                <a class="genre-title" href="/theme/detail.php?theme=82">
+                                                                    ${info_tag}
+                                                                </a>
+                                                                <div class="genre-review">
+                                                                    <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                                                    <div class="genre-score">5.0</div>
+                                                                    <div class="genre-type">${genre}</div>
+                                                                    <div class="genre-count">| 리뷰 0개</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="theme">
-                                <div class="theme-inner">
-                                    <div class="pic" style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
-                                        <a href="/theme/detail.php?theme=82"><</a>
-                                    </div>
-                                    <div class="info">
-                                        <div class="name">
-                                            <p>
-                                                <span>
-                                                    <a href="/theme/detail.php?theme=82">젠틀맨 뱅크</a>
-                                                </span>
-                                            </p>
+                                        <div class="theme-info">
+                                            <div class="preface">
+                                                <h2>정보</h2>
+                                            </div>
+                                            <div class="info-telephone">${phone}</div>
+                                            <div class="info-address">${address}</div>
                                         </div>
-                                        <div class="genre">
-                                            <span class="text-genre">범죄</span>
+                                        <div class="theme-fee">
+                                            <div class="preface">
+                                                <h2>요금</h2>
+                                            </div>
+                                            <div class="fee-list">
+                                                ${fee}
+                                            </div>
+                                        </div>`
+                        $('#theme-final').append(temp_html)
+                    }
+                }
+            })
+        }
+    </script>
+</head>
 
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="theme">
-                                <div class="theme-inner">
-                                    <div class="pic" style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">
-                                        <a href="/theme/detail.php?theme=82"><</a>
-                                    </div>
-                                    <div class="info">
-                                        <div class="name">
-                                            <p>
-                                                <span>
-                                                    <a href="/theme/detail.php?theme=82">젠틀맨 뱅크</a>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="genre">
-                                            <span class="text-genre">범죄</span>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<body>
+<div class="wrap">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <img src="../static/images/logo.png" alt="logo">
             </div>
         </div>
-    </body>
+        <div class="membership">
+            <button class="login">로그인</button>
+            <button class="register">회원가입</button>
+        </div>
+    </header>
+    <main>
+        <div class="escape-theme" id="theme-final">
+{#            <div class="theme-description">#}
+{#                <div class="preface">#}
+{#                    <h2>소개</h2>#}
+{#                </div>#}
+{#                <div class="desc">#}
+{#                    <p>#}
+{#                        <span>#}
+{#                            "극강의 공포를 느끼고 싶다면 ! 남다른 스케일의 방탈출을 즐기고 싶다면 !"#}
+{#                            <br>#}
+{#                            "신사역 8번 출구 인근 세상 제일 꿀잼 방탈출 카페 ‘시그널헌터’"#}
+{#                        </span>#}
+{#                    </p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="theme-image">#}
+{#                <div class="preface">#}
+{#                    <h2>테마</h2>#}
+{#                </div>#}
+{#                <div class="theme-list">#}
+{#                    <div class="theme">#}
+{#                        <div class="theme-inner">#}
+{#                            <div class="pic"#}
+{#                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">#}
+{#                                <a href="/theme/detail.php?theme=82"><</a>#}
+{#                            </div>#}
+{#                            <div class="info">#}
+{#                                <div class="name">#}
+{#                                    <p>#}
+{#                                        <a href="/theme/detail.php?theme=82"></a>#}
+{#                                    </p>#}
+{#                                </div>#}
+{#                                <div class="genre">#}
+{#                                    <a class="genre-title" href="/theme/detail.php?theme=82">#}
+{#                                        젠틀맨 뱅크#}
+{#                                    </a>#}
+{#                                    <div class="genre-review">#}
+{#                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>#}
+{#                                        <div class="genre-score">5.0</div>#}
+{#                                        <div class="genre-type">범죄</div>#}
+{#                                        <div class="genre-count">| 리뷰 0개</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="theme">#}
+{#                        <div class="theme-inner">#}
+{#                            <div class="pic"#}
+{#                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">#}
+{#                                <a href="/theme/detail.php?theme=82"><</a>#}
+{#                            </div>#}
+{#                            <div class="info">#}
+{#                                <div class="name">#}
+{#                                    <p>#}
+{#                                        <a href="/theme/detail.php?theme=82"></a>#}
+{#                                    </p>#}
+{#                                </div>#}
+{#                                <div class="genre">#}
+{#                                    <a class="genre-title" href="/theme/detail.php?theme=82">#}
+{#                                        젠틀맨 뱅크#}
+{#                                    </a>#}
+{#                                    <div class="genre-review">#}
+{#                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>#}
+{#                                        <div class="genre-score">5.0</div>#}
+{#                                        <div class="genre-type">범죄</div>#}
+{#                                        <div class="genre-count">| 리뷰 0개</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="theme">#}
+{#                        <div class="theme-inner">#}
+{#                            <div class="pic"#}
+{#                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">#}
+{#                                <a href="/theme/detail.php?theme=82"><</a>#}
+{#                            </div>#}
+{#                            <div class="info">#}
+{#                                <div class="name">#}
+{#                                    <p>#}
+{#                                        <a href="/theme/detail.php?theme=82"></a>#}
+{#                                    </p>#}
+{#                                </div>#}
+{#                                <div class="genre">#}
+{#                                    <a class="genre-title" href="/theme/detail.php?theme=82">#}
+{#                                        젠틀맨 뱅크#}
+{#                                    </a>#}
+{#                                    <div class="genre-review">#}
+{#                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>#}
+{#                                        <div class="genre-score">5.0</div>#}
+{#                                        <div class="genre-type">범죄</div>#}
+{#                                        <div class="genre-count">| 리뷰 0개</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="theme">#}
+{#                        <div class="theme-inner">#}
+{#                            <div class="pic"#}
+{#                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">#}
+{#                                <a href="/theme/detail.php?theme=82"><</a>#}
+{#                            </div>#}
+{#                            <div class="info">#}
+{#                                <div class="name">#}
+{#                                    <p>#}
+{#                                        <a href="/theme/detail.php?theme=82"></a>#}
+{#                                    </p>#}
+{#                                </div>#}
+{#                                <div class="genre">#}
+{#                                    <a class="genre-title" href="/theme/detail.php?theme=82">#}
+{#                                        젠틀맨 뱅크#}
+{#                                    </a>#}
+{#                                    <div class="genre-review">#}
+{#                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>#}
+{#                                        <div class="genre-score">5.0</div>#}
+{#                                        <div class="genre-type">범죄</div>#}
+{#                                        <div class="genre-count">| 리뷰 0개</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="theme">#}
+{#                        <div class="theme-inner">#}
+{#                            <div class="pic"#}
+{#                                 style="background-image:url(https://yologuys.com/Escape_img/theme/82.jpg);">#}
+{#                                <a href="/theme/detail.php?theme=82"><</a>#}
+{#                            </div>#}
+{#                            <div class="info">#}
+{#                                <div class="name">#}
+{#                                    <p>#}
+{#                                        <a href="/theme/detail.php?theme=82"></a>#}
+{#                                    </p>#}
+{#                                </div>#}
+{#                                <div class="genre">#}
+{#                                    <a class="genre-title" href="/theme/detail.php?theme=82">#}
+{#                                        젠틀맨 뱅크#}
+{#                                    </a>#}
+{#                                    <div class="genre-review">#}
+{#                                        <div class="genre-star">⭐⭐⭐⭐⭐</div>#}
+{#                                        <div class="genre-score">5.0</div>#}
+{#                                        <div class="genre-type">범죄</div>#}
+{#                                        <div class="genre-count">| 리뷰 0개</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="theme-info">#}
+{#                <div class="preface">#}
+{#                    <h2>정보</h2>#}
+{#                </div>#}
+{#                <div class="info-telephone">02-336-3527</div>#}
+{#                <div class="info-address">서울 마포구 서교동 338-48</div>#}
+{#            </div>#}
+{#            <div class="theme-fee">#}
+{#                <div class="preface">#}
+{#                    <h2>요금</h2>#}
+{#                </div>#}
+{#                <div class="fee-list">#}
+{#                    ?#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </main>
+</div>
+</body>
 </html>
