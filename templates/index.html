@@ -1,28 +1,161 @@
 <!doctype html>
 <html lang="en">
-    <head>
+<head>
+    <!-- Webpage Title -->
+    <title>Home | 일상탈출</title>
 
-        <!-- Webpage Title -->
-        <title>Home | 일상탈출</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
 
-        <!-- Bulma CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-        <!-- Font Awesome CSS -->
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            listing();
+            titling()
+        });
 
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+        function titling() {
+            $.ajax({
+                type: "GET",
+                url: "/store",
+                data: {},
+                success: function (response) {
+                    let rows = response['stores']
+                    let address = rows[1]['address']
+                    let temp_title = `<div class="info-location">${address}</div>`
+                    $('.location').after(temp_title)
+                }
+            })
 
+        }
 
-        <script>
-        </script>
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/store",
+                data: {},
+                success: function (response) {
+                    let rows = response['stores']
+                    for (let i = 0; i < 24; i++) {
+                        let name = rows[i]['name']
+                        let img = rows[i]['img']
+                        let temp_html = `<div class="info">
+                                            <div class="info-header" style='${img}'>
+                                            </div>
+                                            <div class="info-body">
+                                                <div class="info-title">
+                                                    ${name}
+                                                </div>
+                                                <div class="info-review">
+                                                    <div class="info-star">⭐⭐⭐⭐⭐</div>
+                                                    <div class="info-score">5.0</div>
+                                                    <div class="info-count">| 리뷰 0개</div>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        $('.info-wrap').append(temp_html)
+                    }
+                }
+            })
+        }
 
-    </head>
-    <body>
-    </body>
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃 되었습니다')
+            window.location.href = "/login"
+        }
+    </script>
+
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <img src="../static/images/logo.png" alt="logo">
+            </div>
+        </div>
+        <div class="membership">
+            <button class="logout" onclick="sign_out()">로그아웃</button>
+        </div>
+    </header>
+    <main>
+        <div class="location">
+            <div class="location-wrap">
+                <div class="location-value">홍대</div>
+                <div class="location-value">강남</div>
+                <div class="location-value">부천</div>
+                <div class="location-value">일산</div>
+                <div class="location-value">수원</div>
+                <div class="location-value">인천</div>
+                <div class="location-value">대전</div>
+                <div class="location-value">천안</div>
+                <div class="location-value">청주</div>
+                <div class="location-value">대구</div>
+                <div class="location-value">부산</div>
+                <div class="location-value">전주</div>
+                <div class="location-value">광주</div>
+                <div class="location-value">강원</div>
+                <div class="location-value">제주</div>
+            </div>
+        </div>
+        <div class="info-wrap">
+        </div>
+    </main>
+</div>
+<script>
+    $('.location-value').click(function () {
+        $('.info-wrap').empty()
+        $('.info-location').empty()
+        let locationName = $(this).text()
+        let temp_title = `<div class="info-location">${locationName}</div>`
+        $('.location').after(temp_title)
+        $.ajax({
+            type: 'GET',
+            url: '/store',
+            data: {},
+            success: function (response) {
+                let rows = response['stores']
+                for (let i = 0; i < rows.length; i++) {
+                    let address = rows[i]['address']
+                    if (address === locationName) {
+                        let name = rows[i]['name']
+                        let img = rows[i]['img']
+                        let temp_html = `<div class="info">
+                                            <div class="info-header" style='${img}'>
+                                            </div>
+                                            <div class="info-body">
+                                                <div class="info-title">
+                                                    ${name}
+                                                </div>
+                                                <div class="info-review">
+                                                    <div class="info-star">⭐⭐⭐⭐⭐</div>
+                                                    <div class="info-score">5.0</div>
+                                                    <div class="info-count">| 리뷰 0개</div>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                        $('.info-wrap').append(temp_html)
+                    }
+
+                }
+            }
+        })
+    })
+</script>
+</body>
 </html>
