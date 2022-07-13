@@ -9,9 +9,41 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="../static/css/detail.css">
     <script>
+        let ga_markers = [];
+        var geocoder;
+        var address = "부산 수영구 수영로 665";
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {lat: 37.4981125, lng: 127.0379399}
+            });
+            geocoder = new google.maps.Geocoder();
+            codeAddress(geocoder, map);
+        }
+
+        function codeAddress(geocoder, map) {
+            geocoder.geocode({'address': address}, function (results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
         $(document).ready(function () {
             show_comment();
         });
@@ -28,7 +60,6 @@
                     for (let i = 0; i < rows.length; i++) {
                         let userID = rows[i]['userID']
                         let comment = rows[i]['comment']
-
 
 
                         let temp_html = `<div class="review_all">
@@ -57,7 +88,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/users',
-                data: {userID_give: userID, comment_give: comment },
+                data: {userID_give: userID, comment_give: comment},
                 success: function (response) {
                     alert(response['msg'])
                     window.location.reload()
@@ -65,6 +96,19 @@
             });
         }
     </script>
+    <style>
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+
+        html,
+        body {
+            margin: auto;
+            padding: 35px;
+        }
+
+    </style>
 
 
 </head>
@@ -248,6 +292,13 @@
                 <div class="fee-list">
                     ?
                 </div>
+                <div class="seoul_map" style="padding: 35px;background-color: #fff;margin-bottom: 10px;">
+                    <h2>지도</h2>
+                    <div id="map">
+                    </div>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTNm1FSmfSnIa9ZakeUfLVXTo6bEd_W3c&callback=initMap&region=de"
+                            defer></script>
+                </div>
             </div>
         </div>
         <div class="review" id="Review">
@@ -267,7 +318,6 @@
         </div>
     </main>
 </div>
-
 
 
 </body>
