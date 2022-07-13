@@ -64,16 +64,33 @@
         //     });
         // }
 
-        let map;
+        let ga_markers = [];
+        var geocoder;
+        var address = "서울 마포구 서교동 338-48";
 
         function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: {lat: 37.4981125, lng: 127.0379399},
-                zoom: 10,
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {lat: 37.4981125, lng: 127.0379399}
+            });
+            geocoder = new google.maps.Geocoder();
+            codeAddress(geocoder, map);
+        }
+
+        function codeAddress(geocoder, map) {
+            geocoder.geocode({'address': address}, function (results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
             });
         }
 
-        window.initMap = initMap;
     </script>
     <style>
         #map {
