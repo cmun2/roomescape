@@ -32,18 +32,18 @@
 #         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 #
 #
-# @app.route('/login')
-# def login():
-#     msg = request.args.get("msg")
-#     return render_template('login.html', msg=msg)
-#
-#
-# @app.route('/user/<username>')
-# def user(username):
-#     # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+# # @app.route('/login')
+# # def login():
+# #     msg = request.args.get("msg")
+# #     return render_template('login.html', msg=msg)
+# #
+# #
+# # @app.route('/user/<username>')
+# # def user(username):
+# #     # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
+# #     token_receive = request.cookies.get('mytoken')
+# #     try:
+# #         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 #         status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
 #
 #         user_info = db.users.find_one({"username": username}, {"_id": False})
@@ -143,8 +143,8 @@ app = Flask(__name__)
 import requests
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.5aanfac.mongodb.net/?retryWrites=true&w=majority')
-db = client.dbminiproject
+client = MongoClient('mongodb+srv://test:sparta@cluster0.34r2eiy.mongodb.net/?retryWrites=true&w=majority')
+db = client.roomescape
 
 @app.route('/')
 def home():
@@ -159,14 +159,14 @@ def save_comment():
         'userID': userid_receive,
         'comment': comment_receive
     }
-    db.users.insert_one(doc)
+    db.comments.insert_one(doc)
 
     return jsonify({'msg':'후기 등록 완료'})
 
 
 @app.route("/users", methods=["GET"])
 def show_comment():
-    comment_list = list(db.users.find({}, {'_id': False}))
+    comment_list = list(db.comments.find({}, {'_id': False}))
     return jsonify({'comments':comment_list})
 
 
