@@ -71,6 +71,10 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f2ad70d6be9e2cb98abb32a100b17b8a6a0376d2
 @app.route('/detail')
 def page2():
     return render_template('detail.html')
