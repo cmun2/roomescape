@@ -3,7 +3,7 @@ import jwt
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -55,7 +55,8 @@ def sign_in():
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        # token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
         return jsonify({'result': 'success', 'token': token})
     else:
@@ -82,7 +83,12 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-@app.route('/detail')
+@app.route('/detail3')
+def usercomment():
+    usercomment = list(db.users.find({}, {'_id': False,'password' : False, 'userID':False, 'comment':False}))
+    return jsonify({'user_name': usercomment})
+
+@app.route('/detail/')
 def page2():
     return render_template('detail.html')
 
@@ -91,20 +97,19 @@ def detailing():
     detail_list = list(db.details2.find({}, {'_id': False}))
     return jsonify({'detail': detail_list})
 
-
 @app.route("/detail/<int:num>")
 def page(num):
     return render_template('detail.html', num=num)
-
-
 
 @app.route("/users", methods=["POST"])
 def save_comment():
     userid_receive = request.form['userID_give']
     comment_receive = request.form['comment_give']
+    star_receive = request.form['star_give']
     doc = {
         'userID': userid_receive,
-        'comment': comment_receive
+        'comment': comment_receive,
+        'star': star_receive
     }
     db.comments.insert_one(doc)
 

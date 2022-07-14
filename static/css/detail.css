@@ -162,6 +162,25 @@ main .form-box {
     border-radius: 10px;
     overflow: hidden;
 }
+main .starbox{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    appearance: none;
+    outline: none;
+}
+
+main .starbox select{
+    appearance: none;
+    outline: none;
+    border: none;
+}
+main .starbox select:focus{
+    outline: none;
+}
+
+
+
 
 
 main .form-box .input-title {
@@ -171,6 +190,7 @@ main .form-box .input-title {
     border-bottom: 1px solid #eee;
     appearance: none;
     padding: 10px;
+    position: relative;
 }
 
 main .form-box .input-title:focus {
@@ -229,3 +249,14 @@ main .review_all {
 main .review_all:first-child {
     margin-top: 30px;
 }
+
+main .writer {
+    position: relative;
+}
+
+main .writer .star_img{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
