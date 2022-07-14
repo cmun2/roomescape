@@ -86,6 +86,17 @@ def check_dup():
 def page2():
     return render_template('detail.html')
 
+@app.route("/detail2", methods=["GET"])
+def detailing():
+    detail_list = list(db.details2.find({}, {'_id': False}))
+    return jsonify({'detail': detail_list})
+
+
+@app.route("/detail/<int:num>")
+def page(num):
+    return render_template('detail.html', num=num)
+
+
 
 @app.route("/users", methods=["POST"])
 def save_comment():

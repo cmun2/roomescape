@@ -64,13 +64,13 @@ main .theme-description {
 }
 
 main .theme-description .desc {
-    font-size: 14px;
+    font-size: 18px;
 }
 
 main h2 {
-    font-size: 1.5em;
+    font-size: 30px;
     color: #a6a6a6;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     font-weight: 700;
 }
 
@@ -104,6 +104,12 @@ main .theme-image .genre-title {
     color: #337ab7;
 }
 
+main .theme-image .genre-type {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #a9a9a9;
+}
+
 main .theme-image .genre-review {
     font-size: 14px;
     display: flex;
@@ -113,13 +119,13 @@ main .theme-image .genre-review {
 main .theme-image .genre-score {
     position: absolute;
     top: 0;
-    left: 100px;
+    left: 105px;
 }
 
 main .theme-image .genre-count {
     position: absolute;
     top: 0;
-    left: 125px;
+    left: 135px;
 }
 
 main .theme-info {
@@ -133,6 +139,13 @@ main .theme-fee {
     padding: 35px;
     background-color: #fff;
     margin-bottom: 10px;
+}
+
+main .seoul_map {
+    width: 1000px;
+    margin: 20px auto 0 auto;
+    padding: 35px;
+    background-color: #fff;
 }
 
 
@@ -210,5 +223,9 @@ main .review_all {
     border: 1px solid #bdbdbd;
     border-radius: 10px;
     padding: 10px;
-    margin: 10px;
+    margin-bottom: 15px;
+}
+
+main .review_all:first-child {
+    margin-top: 30px;
 }
