@@ -95,9 +95,10 @@ for i in range(len(num_list)):
     #     'genre': genre,
     #     'phone': phone,
     #     'address': address,
-    #     'fee': fee
+    #     'fee': fee,
+    #     'num': num_list[i]['num']
     # }
-    #db.details.insert_one(doc)
+    # db.details2.insert_one(doc)
 
 
 # data = requests.get('https://www.roomescape.co.kr/store/detail.php?cafe=405', headers=headers)
@@ -111,7 +112,7 @@ def home():
 
 @app.route("/detail", methods=["GET"])
 def listing():
-    detail_list = list(db.details.find({}, {'_id': False}))
+    detail_list = list(db.details2.find({}, {'_id': False}))
     return jsonify({'detail': detail_list})
 
 if __name__ == '__main__':

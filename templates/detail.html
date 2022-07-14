@@ -33,7 +33,8 @@
                 data: {},
                 success: function (response) {
                     let rows = response['detail']
-                    for (let i=0;i<rows.length; i++) {
+                    let i = 8
+                    //for (let i=0;i<rows.length; i++) {
                         let desc = rows[i]['desc']
                         let image = rows[i]['image']
                         let info_tag = rows[i]['info_tag']
@@ -104,7 +105,7 @@
                                             </div>
                                         </div>`
                         $('#theme-final').append(temp_html)
-                    }
+                    //}
                 }
             })
         }
