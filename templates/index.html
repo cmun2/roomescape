@@ -24,7 +24,7 @@
     <script>
         $(document).ready(function () {
             listing();
-            titling()
+            titling();
         });
 
         function titling() {
@@ -68,6 +68,20 @@
                                         </div>`
                         $('.info-wrap').append(temp_html)
                     }
+                    setTimeout(function () {
+                    $('.info').click(function () {
+                        let imageNum = $(this).children('.info-header').css('background-image')
+                        let regex = /[^0-9]/g
+                        let result = imageNum.replace(regex, "");
+                        console.log(result)
+                        for (let i = 0; i < rows.length; i++) {
+                            let num = rows[i]['num']
+                            if (result === num) {
+                                window.location.replace(`/detail/${result}`)
+                            }
+                        }
+                    })
+                }, 100)
                 }
             })
         }
@@ -153,6 +167,19 @@
                     }
 
                 }
+                setTimeout(function () {
+                    $('.info').click(function () {
+                        let imageNum = $(this).children('.info-header').css('background-image')
+                        let regex = /[^0-9]/g
+                        let result = imageNum.replace(regex, "");
+                        for (let i = 0; i < rows.length; i++) {
+                            let num = rows[i]['num']
+                            if (result === num) {
+                                window.location.replace(`/detail/${result}`)
+                            }
+                        }
+                    })
+                }, 100)
             }
         })
     })
