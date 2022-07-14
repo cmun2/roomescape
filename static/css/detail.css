@@ -1,0 +1,262 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 80px;
+    background-color: #fff;
+}
+
+header .logo {
+    width: 80px;
+    height: 80px;
+}
+
+header .logo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+header .membership {
+    display: flex;
+}
+
+header .membership > button {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    padding: 10px;
+    overflow: visible;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+
+header .membership > button:hover {
+    color: #9047ee;
+}
+
+main {
+    min-height: calc(100vh - 80px);
+    background-color: #eee;
+    padding-bottom: 100px;
+}
+
+
+main .escape-theme {
+    width: 1000px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+main .theme-description {
+    padding: 35px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+main .theme-description .desc {
+    font-size: 18px;
+}
+
+main h2 {
+    font-size: 30px;
+    color: #a6a6a6;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+main .theme-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+main .theme {
+    width: calc(100% / 4 - 20px);
+    margin: 10px 10px 30px 10px;
+    cursor: pointer;
+}
+
+main .theme-image {
+    padding: 35px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+main .theme-image .pic {
+    width: 100%;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+}
+
+main .theme-image .genre-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #337ab7;
+}
+
+main .theme-image .genre-type {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #a9a9a9;
+}
+
+main .theme-image .genre-review {
+    font-size: 14px;
+    display: flex;
+    position: relative;
+}
+
+main .theme-image .genre-score {
+    position: absolute;
+    top: 0;
+    left: 105px;
+}
+
+main .theme-image .genre-count {
+    position: absolute;
+    top: 0;
+    left: 135px;
+}
+
+main .theme-info {
+    padding: 35px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+
+main .theme-fee {
+    padding: 35px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+main .seoul_map {
+    width: 1000px;
+    margin: 20px auto 0 auto;
+    padding: 35px;
+    background-color: #fff;
+}
+
+
+main .review {
+    width: 1000px;
+    margin: 20px auto 0 auto;
+    padding: 35px;
+    background-color: white;
+}
+
+main .form-box {
+    margin-top: 30px;
+    border: 3px solid #9047ee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+main .starbox{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    appearance: none;
+    outline: none;
+}
+
+main .starbox select{
+    appearance: none;
+    outline: none;
+    border: none;
+}
+main .starbox select:focus{
+    outline: none;
+}
+
+
+
+
+
+main .form-box .input-title {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    appearance: none;
+    padding: 10px;
+    position: relative;
+}
+
+main .form-box .input-title:focus {
+    outline: none;
+}
+
+main .form-box .textarea-desc {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    border: none;
+    appearance: none;
+    padding: 10px;
+}
+
+main .form-box .textarea-desc:focus {
+    outline: none;
+}
+
+main .form-box .form-regist {
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #9047ee;
+    color: #fff;
+    text-align: center;
+}
+
+main .memb_review_box {
+    margin-top: 10px;
+}
+
+main .memb_review_box .writer {
+    border-bottom: 1px solid #bdbdbd;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+main .memb_review_box .writer .name {
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+main .memb_review_box .review_bottom {
+    margin: 10px 0;
+}
+
+main .review_all {
+    border: 1px solid #bdbdbd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+main .review_all:first-child {
+    margin-top: 30px;
+}
+
+main .writer {
+    position: relative;
+}
+
+main .writer .star_img{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+

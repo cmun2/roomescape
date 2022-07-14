@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="../static/css/detail.css">
+
+
+    <script>
+        $(document).ready(function () {
+            detailing();
+        });
+
+        function detailing() {
+            $.ajax({
+                type: 'GET',
+                url: '/detail2',
+                data: {},
+                success: function (response) {
+                    let rows = response['detail']
+                    let pageNumber = window.location.href
+                    let realPageNumber = pageNumber.slice(-3)
+                    let question = rows.findIndex(n => n.num === realPageNumber)
+                    let i = Number(question)
+
+                    let desc = rows[i]['desc']
+                    let image = rows[i]['image']
+                    let info_tag = rows[i]['info_tag']
+                    let genre = rows[i]['genre']
+                    let phone = rows[i]['phone']
+                    let address = rows[i]['address']
+                    let fee = rows[i]['fee']
+                    let temp_html = `<div class="theme-description">
+                                            <div class="preface">
+                                                <h2>소개</h2>
+                                            </div>
+                                            <div class="desc">
+                                                <p>
+                                                    <span>
+                                                        ${desc}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="theme-image">
+                                            <div class="preface">
+                                                <h2>테마</h2>
+                                            </div>
+                                            <div class="theme-list">
+                                                <div class="theme">
+                                                    <div class="theme-inner">
+                                                        <div class="pic"
+                                                             style="background-image:url(${image});">
+                                                            <a href="/theme/detail.php?theme=82"><</a>
+                                                        </div>
+                                                        <div class="info">
+                                                            <div class="name">
+                                                                <p>
+                                                                    <a href="/theme/detail.php?theme=82"></a>
+                                                                </p>
+                                                            </div>
+                                                            <div class="genre">
+                                                                <a class="genre-title" href="/theme/detail.php?theme=82">
+                                                                    ${info_tag}<span class="genre-type">${genre}</span>
+                                                                </a>
+                                                                <div class="genre-review">
+                                                                    <div class="genre-star">⭐⭐⭐⭐⭐</div>
+                                                                    <div class="genre-score">5.0</div>
+                                                                    <div class="genre-count">| 리뷰 0개</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="theme-info">
+                                            <div class="preface">
+                                                <h2>정보</h2>
+                                            </div>
+                                            <div class="info-telephone">${phone}</div>
+                                            <div class="info-address">${address}</div>
+                                        </div>
+                                        <div class="theme-fee">
+                                            <div class="preface">
+                                                <h2>요금</h2>
+                                            </div>
+                                            <div class="fee-list">
+                                                ${fee}
+                                            </div>
+                                        </div>`
+                    $('#theme-final').append(temp_html)
+                }
+            })
+        }
+
+        let ga_markers = [];
+        var geocoder;
+        // var address = address;
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {lat: 37.4981125, lng: 127.0379399}
+            });
+            geocoder = new google.maps.Geocoder();
+
+            $.ajax({
+                type: 'GET',
+                url: '/detail2',
+                data: {},
+                success: function (response) {
+                    let rows = response['detail']
+                    let pageNumber = window.location.href
+                    let realPageNumber = pageNumber.slice(-3)
+                    let question = rows.findIndex(n => n.num === realPageNumber)
+                    let i = Number(question)
+                    let address = rows[i]['address']
+                    codeAddress(geocoder,map,address);
+
+                    // for (let i = 0; i < rows.length; i++) {
+                        // let address = rows[i]['address']
+                        // console.log(address)
+                        // new google.maps.Marker({position: address, map: map});
+
+                    // }
+                }
+            });
+
+
+        function codeAddress(geocoder, map, address) {
+            geocoder.geocode({'address': address}, function (results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    // alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }}
+
+        $(document).ready(function () {
+            show_comment();
+        });
+
+        function show_comment() {
+            $.ajax({
+                type: 'GET',
+                url: '/users',
+                data: {},
+                success: function (response) {
+                    let rows = response['comments']
+                    // console.log(rows)
+
+                    for (let i = 0; i < rows.length; i++) {
+                        let userID = rows[i]['userID']
+                        let comment = rows[i]['comment']
+                        let star = rows[i]['star']
+
+                        let star_image = '⭐'.repeat(star)
+
+
+                        let temp_html = `<div class="review_all">
+                                            <div class="memb_review">
+                                                <div class="review_top">
+                                                    <div class="writer">
+                                                        <p class="name text">${userID}</p>
+                                                        <P class="star_img">${star_image}</P>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="review_bottom">
+                                                <p>${comment}</p>
+                                            </div>
+                                          </div>  `
+                        $('#comment-box').append(temp_html)
+                    }
+                }
+            });
+        }
+
+        function save_comment() {
+            let userID = $('#floatingTextarea2').val()
+            let comment = $('.textarea-desc').val()
+            let star = $('#star').val()
+
+            $.ajax({
+                type: 'POST',
+                url: '/users',
+                data: {userID_give: userID, comment_give: comment, star_give: star},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            });
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃 되었습니다')
+            window.location.href = "/login"
+        }
+
+    </script>
+    <style>
+        #map {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <img src="../static/images/logo.png" alt="logo">
+            </div>
+        </div>
+        <div class="membership">
+            <button class="logout" onclick="sign_out()">로그아웃</button>
+        </div>
+    </header>
+    <main>
+        <div class="escape-theme" id="theme-final">
+        </div>
+        <div class="seoul_map">
+            <h2>지도</h2>
+            <div id="map">
+            </div>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTNm1FSmfSnIa9ZakeUfLVXTo6bEd_W3c&callback=initMap&region=de"
+                    defer></script>
+        </div>
+        <div class="review" id="Review">
+            <div class="perface">
+                <h2 class="review02">리뷰</h2>
+            </div>
+            <div class="form-floating">
+                <div class="form-box">
+                    <input class="input-title" id="floatingTextarea2"placeholder="nickname">
+                        <div class="starbox">
+                            <select name="job" class="select_box" id="star">
+                                <option selected disabled>평점</option>
+                                <option value="1">⭐</option>
+                                <option value="2">⭐ ⭐</option>
+                                <option value="3">⭐ ⭐ ⭐</option>
+                                <option value="4">⭐ ⭐ ⭐ ⭐</option>
+                                <option value="5">⭐ ⭐ ⭐ ⭐ ⭐</option>
+                            </select>
+                        </div>
+                    <textarea class="textarea-desc" placeholder="comment"></textarea>
+                    <button class="form-regist" onclick="save_comment()">후기 등록</button>
+                </div>
+                <div class="memb_review_box" id="comment-box">
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+</body>
+</html>
