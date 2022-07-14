@@ -64,6 +64,7 @@ main .theme-description {
 }
 
 main .theme-description .desc {
+<<<<<<< HEAD
     font-size: 18px;
 }
 
@@ -71,6 +72,15 @@ main h2 {
     font-size: 30px;
     color: #a6a6a6;
     margin-bottom: 30px;
+=======
+    font-size: 14px;
+}
+
+main h2 {
+    font-size: 1.5em;
+    color: #a6a6a6;
+    margin-bottom: 10px;
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
     font-weight: 700;
 }
 
@@ -104,12 +114,15 @@ main .theme-image .genre-title {
     color: #337ab7;
 }
 
+<<<<<<< HEAD
 main .theme-image .genre-type {
     margin-left: 10px;
     font-size: 14px;
     color: #a9a9a9;
 }
 
+=======
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 main .theme-image .genre-review {
     font-size: 14px;
     display: flex;
@@ -119,13 +132,21 @@ main .theme-image .genre-review {
 main .theme-image .genre-score {
     position: absolute;
     top: 0;
+<<<<<<< HEAD
     left: 105px;
+=======
+    left: 100px;
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 }
 
 main .theme-image .genre-count {
     position: absolute;
     top: 0;
+<<<<<<< HEAD
     left: 135px;
+=======
+    left: 125px;
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 }
 
 main .theme-info {
@@ -141,6 +162,7 @@ main .theme-fee {
     margin-bottom: 10px;
 }
 
+<<<<<<< HEAD
 main .seoul_map {
     width: 1000px;
     margin: 20px auto 0 auto;
@@ -148,6 +170,8 @@ main .seoul_map {
     background-color: #fff;
 }
 
+=======
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 
 main .review {
     width: 1000px;
@@ -162,6 +186,7 @@ main .form-box {
     border-radius: 10px;
     overflow: hidden;
 }
+<<<<<<< HEAD
 main .starbox{
     position: absolute;
     top: 10px;
@@ -181,6 +206,8 @@ main .starbox select:focus{
 
 
 
+=======
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 
 
 main .form-box .input-title {
@@ -190,7 +217,10 @@ main .form-box .input-title {
     border-bottom: 1px solid #eee;
     appearance: none;
     padding: 10px;
+<<<<<<< HEAD
     position: relative;
+=======
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 }
 
 main .form-box .input-title:focus {
@@ -243,6 +273,7 @@ main .review_all {
     border: 1px solid #bdbdbd;
     border-radius: 10px;
     padding: 10px;
+<<<<<<< HEAD
     margin-bottom: 15px;
 }
 
@@ -260,3 +291,7 @@ main .writer .star_img{
     right: 10px;
 }
 
+=======
+    margin: 10px;
+}
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212

@@ -38,14 +38,23 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
+<<<<<<< HEAD
 @app.route('/index')
 def index():
     return render_template('index.html')
+=======
+
+@app.route('/login')
+def login():
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
+<<<<<<< HEAD
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
@@ -61,7 +70,22 @@ def sign_in():
         return jsonify({'result': 'success', 'token': token})
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+=======
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+        payload = {
+            'id': username_receive,
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
+        return jsonify({'result': 'success', 'token': token})
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
@@ -72,10 +96,15 @@ def sign_up():
         "username": username_receive,
         "password": password_hash
     }
+<<<<<<< HEAD
 
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
+=======
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 
+    db.users.insert_one(doc)
+    return jsonify({'result': 'success'})
 
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
@@ -83,6 +112,7 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
+<<<<<<< HEAD
 @app.route('/detail3')
 def usercomment():
     usercomment = list(db.users.find({}, {'_id': False,'password' : False, 'userID':False, 'comment':False}))
@@ -116,10 +146,34 @@ def save_comment():
     return jsonify({'msg':'후기 등록 완료'})
 
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> f2ad70d6be9e2cb98abb32a100b17b8a6a0376d2
+@app.route('/detail')
+def page2():
+    return render_template('detail.html')
+
+
+@app.route("/users", methods=["POST"])
+def save_comment():
+    userid_receive = request.form['userID_give']
+    comment_receive = request.form['comment_give']
+    doc = {
+        'userID': userid_receive,
+        'comment': comment_receive
+    }
+    db.comments.insert_one(doc)
+
+    return jsonify({'msg':'후기 등록 완료'})
+
+
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
 @app.route("/users", methods=["GET"])
 def show_comment():
     comment_list = list(db.comments.find({}, {'_id': False}))
     return jsonify({'comments':comment_list})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=3000, debug=True)
+    app.run('0.0.0.0', port=8000, debug=True)

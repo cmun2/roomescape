@@ -55,7 +55,11 @@
                 success: function (response) {
                     if (response['result'] == 'success') {
                         $.cookie('mytoken', response['token'], {path: '/'});
+<<<<<<< HEAD
                         window.location.replace("/index")
+=======
+                        window.location.replace("/detail")
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
                     } else {
                         alert(response['msg'])
                     }
@@ -217,7 +221,11 @@
         }
 
         .hero {
+<<<<<<< HEAD
             background: url('/static/images/logo.png');
+=======
+            background: url('/static/background_image.png');
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
             max-width: 100%;
             margin: auto;
         }
@@ -227,7 +235,11 @@
 <body>
 <section class="hero is-white">
     <div class="hero-body has-text-centered" style="padding-bottom:18rem;margin:auto;">
+<<<<<<< HEAD
         <h1 class="title is-sparta">Room escape</h1>
+=======
+        <h1 class="title is-sparta">Roomesscape</h1>
+>>>>>>> 50aced3306214c823b2284592962376cf5e30212
         <h3 class="subtitle is-sparta">일상탈출</h3>
     </div>
 </section>
